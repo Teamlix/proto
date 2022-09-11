@@ -1,8 +1,8 @@
 version: v1
-name: buf.build/babyadult/proto
+name: buf.build/teamlix/proto
 deps:
     - buf.build/googleapis/googleapis
     - buf.build/grpc-ecosystem/grpc-gateway
 build:
   excludes:
-    - proto/third_party
+    - protos/third_party
