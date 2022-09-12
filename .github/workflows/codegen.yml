@@ -36,4 +36,4 @@ jobs:
 
     - name: Buf generate
       run: |
-        buf generate"
+        buf generate
