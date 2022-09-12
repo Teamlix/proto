@@ -2,7 +2,17 @@ on:
   push:
 
 jobs:
-  print_hello:
+  build:
     runs-on: ubuntu-latest
+    
     steps:
-      - run: echo "Hello World!"
+    - uses: actions/checkout@v3
+      
+    - name: Install Buf
+      run: make install-buf
+      
+    # - name: Run check
+    #   run: make check
+      
+    # - name: Run distcheck
+    #   run: make distcheck
