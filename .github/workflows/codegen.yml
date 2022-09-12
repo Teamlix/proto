@@ -8,11 +8,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       
-    - name: Install dependencies
-      run: make install-deps
+    # - name: Install dependencies
+    #   run: make install-deps
 
     - name: Install Buf
-      run: make install-buf
+      run: ./install_buf.sh
       
     # - name: Run check
     #   run: make check
