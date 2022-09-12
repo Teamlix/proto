@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             (unknown)
-// source: protos/post_service/v1/post_service.v1.proto
+// source: post_service/v1/post_service.v1.proto
 
 package post_service
 
@@ -61,5 +61,5 @@ var PostService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*PostServiceServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams:     []grpc.StreamDesc{},
-	Metadata:    "protos/post_service/v1/post_service.v1.proto",
+	Metadata:    "post_service/v1/post_service.v1.proto",
 }
