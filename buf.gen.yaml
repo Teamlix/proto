@@ -16,4 +16,4 @@ plugins:
   - name: openapiv2
     out: swagger
     strategy: all
-    opt: allow_merge=true,merge_file_name=swagger
+    opt: allow_merge=true,merge_file_name=teamlix
