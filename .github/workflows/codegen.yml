@@ -5,50 +5,50 @@ jobs:
   build:
     runs-on: ubuntu-latest
       
-      steps:
+    steps:
 
-      - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-      - name: Remove previous generated code
-        run: |
-          rm -rf ./gen/go
-          tree gen
+    - name: Remove previous generated code
+      run: |
+        rm -rf ./gen/go
+        tree gen
 
-      - uses: actions/setup-go@v3
-        with:
-          go-version-file: './go.mod'
-      
-      - name: Install gRPC-Gateway
-        run: |
-          echo "GOPATH is: $(echo $GOPATH)"
-          echo "PATH variable is: $(echo $PATH)"
-          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway
-          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2
-          go install google.golang.org/protobuf/cmd/protoc-gen-go
-          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
+    - uses: actions/setup-go@v3
+      with:
+        go-version-file: './go.mod'
+    
+    - name: Install gRPC-Gateway
+      run: |
+        echo "GOPATH is: $(echo $GOPATH)"
+        echo "PATH variable is: $(echo $PATH)"
+        go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway
+        go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2
+        go install google.golang.org/protobuf/cmd/protoc-gen-go
+        go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
 
-      - name: Install Buf
-        run: |
-          BIN="/usr/local/bin" && \
-          VERSION="1.7.0" && \
-            curl -sSL \
-              "https://github.com/bufbuild/buf/releases/download/v${VERSION}/buf-$(uname -s)-$(uname -m)" \
-              -o "${BIN}/buf" && \
-            chmod +x "${BIN}/buf"
+    - name: Install Buf
+      run: |
+        BIN="/usr/local/bin" && \
+        VERSION="1.7.0" && \
+          curl -sSL \
+            "https://github.com/bufbuild/buf/releases/download/v${VERSION}/buf-$(uname -s)-$(uname -m)" \
+            -o "${BIN}/buf" && \
+          chmod +x "${BIN}/buf"
 
-      - name: Check Buf
-        run: |
-          echo "Installed Buf version: $(buf --version)"
+    - name: Check Buf
+      run: |
+        echo "Installed Buf version: $(buf --version)"
 
-      - name: Buf generate
-        run: |
-          buf generate
-          tree gen
-      
-      - uses: actions/checkout@v3
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          git commit -m "generated code"
-          git push
+    - name: Buf generate
+      run: |
+        buf generate
+        tree gen
+    
+    - uses: actions/checkout@v3
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add .
+        git commit -m "generated code"
+        git push
