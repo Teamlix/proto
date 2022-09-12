@@ -3,3 +3,4 @@ package post_service.v1;
 option go_package = "github.com/Teamlix/proto/codegen/go/v1/post_service";
 
 service PostService {}
+
