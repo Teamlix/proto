@@ -6,7 +6,16 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: Install general dependencies
+      run: |
+        sudo apt-get install tree
+
     - uses: actions/checkout@v3
+
+    - name: Remove previous generated code
+      run: |
+        rm -rf ./gen/go
+        tree gen
 
     - uses: actions/setup-go@v3
       with:
@@ -37,3 +46,4 @@ jobs:
     - name: Buf generate
       run: |
         buf generate
+        tree gen
