@@ -18,88 +18,88 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// GamesClient is the client API for Games service.
+// GameServiceClient is the client API for GameService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type GamesClient interface {
+type GameServiceClient interface {
 	// Create new game
 	CreateGame(ctx context.Context, in *CreateGameRequest, opts ...grpc.CallOption) (*CreateGameResponse, error)
 }
 
-type gamesClient struct {
+type gameServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewGamesClient(cc grpc.ClientConnInterface) GamesClient {
-	return &gamesClient{cc}
+func NewGameServiceClient(cc grpc.ClientConnInterface) GameServiceClient {
+	return &gameServiceClient{cc}
 }
 
-func (c *gamesClient) CreateGame(ctx context.Context, in *CreateGameRequest, opts ...grpc.CallOption) (*CreateGameResponse, error) {
+func (c *gameServiceClient) CreateGame(ctx context.Context, in *CreateGameRequest, opts ...grpc.CallOption) (*CreateGameResponse, error) {
 	out := new(CreateGameResponse)
-	err := c.cc.Invoke(ctx, "/game_service.v1.Games/CreateGame", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/game_service.v1.GameService/CreateGame", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// GamesServer is the server API for Games service.
-// All implementations must embed UnimplementedGamesServer
+// GameServiceServer is the server API for GameService service.
+// All implementations must embed UnimplementedGameServiceServer
 // for forward compatibility
-type GamesServer interface {
+type GameServiceServer interface {
 	// Create new game
 	CreateGame(context.Context, *CreateGameRequest) (*CreateGameResponse, error)
-	mustEmbedUnimplementedGamesServer()
+	mustEmbedUnimplementedGameServiceServer()
 }
 
-// UnimplementedGamesServer must be embedded to have forward compatible implementations.
-type UnimplementedGamesServer struct {
+// UnimplementedGameServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedGameServiceServer struct {
 }
 
-func (UnimplementedGamesServer) CreateGame(context.Context, *CreateGameRequest) (*CreateGameResponse, error) {
+func (UnimplementedGameServiceServer) CreateGame(context.Context, *CreateGameRequest) (*CreateGameResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateGame not implemented")
 }
-func (UnimplementedGamesServer) mustEmbedUnimplementedGamesServer() {}
+func (UnimplementedGameServiceServer) mustEmbedUnimplementedGameServiceServer() {}
 
-// UnsafeGamesServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to GamesServer will
+// UnsafeGameServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to GameServiceServer will
 // result in compilation errors.
-type UnsafeGamesServer interface {
-	mustEmbedUnimplementedGamesServer()
+type UnsafeGameServiceServer interface {
+	mustEmbedUnimplementedGameServiceServer()
 }
 
-func RegisterGamesServer(s grpc.ServiceRegistrar, srv GamesServer) {
-	s.RegisterService(&Games_ServiceDesc, srv)
+func RegisterGameServiceServer(s grpc.ServiceRegistrar, srv GameServiceServer) {
+	s.RegisterService(&GameService_ServiceDesc, srv)
 }
 
-func _Games_CreateGame_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _GameService_CreateGame_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateGameRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GamesServer).CreateGame(ctx, in)
+		return srv.(GameServiceServer).CreateGame(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/game_service.v1.Games/CreateGame",
+		FullMethod: "/game_service.v1.GameService/CreateGame",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GamesServer).CreateGame(ctx, req.(*CreateGameRequest))
+		return srv.(GameServiceServer).CreateGame(ctx, req.(*CreateGameRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Games_ServiceDesc is the grpc.ServiceDesc for Games service.
+// GameService_ServiceDesc is the grpc.ServiceDesc for GameService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Games_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "game_service.v1.Games",
-	HandlerType: (*GamesServer)(nil),
+var GameService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "game_service.v1.GameService",
+	HandlerType: (*GameServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "CreateGame",
-			Handler:    _Games_CreateGame_Handler,
+			Handler:    _GameService_CreateGame_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
