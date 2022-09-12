@@ -11,6 +11,7 @@ jobs:
     - uses: actions/setup-go@v3
       with:
         go-version-file: './go.mod'
+      run: echo $PATH
 
     - name: Install Buf
       run: |
@@ -24,6 +25,13 @@ jobs:
     - name: Check Buf
       run: |
         echo "Installed Buf version: $(buf --version)"
+    
+    - name: Install gRPC-Gateway
+      run: |
+        go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway
+        go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2
+        go install google.golang.org/protobuf/cmd/protoc-gen-go
+        go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
     
       
     # - name: Run distcheck
