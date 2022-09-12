@@ -1,3 +1,5 @@
 syntax = "proto3";
 package user_service.v1;
 option go_package = "github.com/Teamlix/proto/codegen/go/v1/user_service";
+
+service UserService {}
