@@ -7,9 +7,6 @@ jobs:
     
     steps:
     - uses: actions/checkout@v3
-      
-    # - name: Install dependencies
-    #   run: make install-deps
 
     - name: Install Buf
       run: |
@@ -19,6 +16,10 @@ jobs:
             "https://github.com/bufbuild/buf/releases/download/v${VERSION}/buf-$(uname -s)-$(uname -m)" \
             -o "${BIN}/buf" && \
           chmod +x "${BIN}/buf"
+
+     - name: Check Buf
+      run: |
+        echo "Installed Buf version: $(buf --version)"
       
     # - name: Run check
     #   run: make check
