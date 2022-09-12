@@ -1,5 +1,5 @@
 install-deps:
-	sudo apt install curl
+	sudo apt-get install curl
 
 install-buf:
 	export PATH=$PATH:/usr/local/bin && \
