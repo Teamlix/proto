@@ -5,4 +5,4 @@ deps:
     - buf.build/grpc-ecosystem/grpc-gateway
 build:
   excludes:
-    - protos/third_party
+    - third_party
