@@ -1,3 +1,6 @@
+install-deps:
+	sudo apt install curl
+
 install-buf:
 	export PATH=$PATH:/usr/local/bin && \
 	BIN="/usr/local/bin" && \
