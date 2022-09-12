@@ -9,7 +9,7 @@ import "google/protobuf/empty.proto";
 // Operating with games
 service GameService {
     // Create new game
-    rpc CreateGame(CreateGameRequests) returns (CreateGameResponse) {
+    rpc CreateGame(CreateGameRequest) returns (CreateGameResponse) {
         option (google.api.http) = {
             post: "/api/v1/game"
             body: "*"
@@ -20,7 +20,7 @@ service GameService {
     }
 }
 
-message CreateGameRequests {
+message CreateGameRequest {
     string name = 1;
     string image = 2;
 }
