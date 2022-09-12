@@ -6,7 +6,7 @@ import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 
-service Games {
+service GameService {
     // Create new game
     rpc CreateGame(CreateGameRequest) returns (CreateGameResponse) {
         option (google.api.http) = {
