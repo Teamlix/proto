@@ -2,4 +2,141 @@ syntax = "proto3";
 package user_service.v1;
 option go_package = "github.com/Teamlix/proto/codegen/go/v1/user_service";
 
-service UserService {}
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+service UserService {
+    // Register new user
+    rpc SignUp(SignUpRequest) returns (SignUpResponse) {
+        option (google.api.http) = {
+            post: "/api/v1/users/signup"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            security: {} // Disable auth
+        };
+    }
+    // Login with email and password
+    rpc SignIn(SignInRequest) returns (SignInResponse) {
+        option (google.api.http) = {
+            post: "/api/v1/users/signin"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            security: {} // Disable auth
+        };
+    }
+    // Log out
+    rpc LogOut(LogOutRequest) returns (LogOutResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/users/logout"
+        };
+    }
+    // Refresh pair of JWT tokens 
+    rpc Refresh(RefreshRequest) returns (RefreshResponse) {
+        option (google.api.http) = {
+            post: "/api/v1/users/refresh"
+            body: "*"
+        };
+    }
+    // Get user object by user's id
+    rpc GetUserByID(GetUserByIDRequest) returns (GetUserByIDResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/users/{user_id}"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            security: {} // Disable auth
+        };
+    }
+    // Get user's list
+    rpc GetUsersList(GetUsersListRequest) returns (GetUsersListResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/users"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            security: {} // Disable auth
+        };
+    }
+}
+
+message Tokens {
+    string access_token = 1;
+    string refresh_token = 2;
+}
+
+message User {
+    string id = 1;
+    string name = 2;
+}
+
+/* signup */
+message SignUpRequest {
+    string name = 1;
+    string email = 2;
+    string password = 3;
+    string repeated_password = 4;
+}
+
+message SignUpResponse {
+    Tokens result = 1;
+}
+/** ** **/
+
+/* signin */
+message SignInRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message SignInResponse {
+    Tokens result = 1;
+}
+/** ** **/
+
+/* logout */
+message LogOutRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message LogOutResponse {
+    bool result = 1;
+}
+/** ** **/
+
+/* refresh tokens */
+message RefreshRequest {
+    string refresh_token = 1;
+}
+
+message RefreshResponse {
+    Tokens result = 1;
+}
+/** ** **/
+
+/* get user by id */
+message GetUserByIDRequest {
+    string user_id = 1;
+}
+
+message GetUserByIDResponse {
+    User result = 1;
+}
+/** ** **/
+
+/* get user's list (ordering by date desc) */
+message GetUsersListRequest {
+    uint32 skip = 1;
+    uint32 limit = 2;
+}
+
+message GetUsersListResponse {
+    message Result {
+        repeated User data = 1;
+        uint32 total_count = 2;
+    }
+    Result result = 1;
+}
+/** ** **/
