@@ -26,13 +26,13 @@ type UserServiceClient interface {
 	SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*SignUpResponse, error)
 	// Login with email and password
 	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error)
-	// Log out
+	// Log out user
 	LogOut(ctx context.Context, in *LogOutRequest, opts ...grpc.CallOption) (*LogOutResponse, error)
 	// Refresh pair of JWT tokens
 	Refresh(ctx context.Context, in *RefreshRequest, opts ...grpc.CallOption) (*RefreshResponse, error)
 	// Get user object by user's id
 	GetUserByID(ctx context.Context, in *GetUserByIDRequest, opts ...grpc.CallOption) (*GetUserByIDResponse, error)
-	// Get user's list (ordering by date desc)
+	// Get user's list (ordering by date_created desc)
 	GetUsersList(ctx context.Context, in *GetUsersListRequest, opts ...grpc.CallOption) (*GetUsersListResponse, error)
 }
 
@@ -106,13 +106,13 @@ type UserServiceServer interface {
 	SignUp(context.Context, *SignUpRequest) (*SignUpResponse, error)
 	// Login with email and password
 	SignIn(context.Context, *SignInRequest) (*SignInResponse, error)
-	// Log out
+	// Log out user
 	LogOut(context.Context, *LogOutRequest) (*LogOutResponse, error)
 	// Refresh pair of JWT tokens
 	Refresh(context.Context, *RefreshRequest) (*RefreshResponse, error)
 	// Get user object by user's id
 	GetUserByID(context.Context, *GetUserByIDRequest) (*GetUserByIDResponse, error)
-	// Get user's list (ordering by date desc)
+	// Get user's list (ordering by date_created desc)
 	GetUsersList(context.Context, *GetUsersListRequest) (*GetUsersListResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
