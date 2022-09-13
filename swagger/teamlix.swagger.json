@@ -7,6 +7,9 @@
   "tags": [
     {
       "name": "GameService"
+    },
+    {
+      "name": "UserService"
     }
   ],
   "consumes": [
@@ -46,6 +49,74 @@
         ],
         "tags": [
           "GameService"
+        ],
+        "security": []
+      }
+    },
+    "/api/v1/signin": {
+      "post": {
+        "summary": "Login with email and password",
+        "operationId": "UserService_SignIn",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SignInResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SignInRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserService"
+        ],
+        "security": []
+      }
+    },
+    "/api/v1/signup": {
+      "post": {
+        "summary": "Register new user",
+        "operationId": "UserService_SignUp",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SignUpResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SignUpRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserService"
         ],
         "security": []
       }
@@ -100,6 +171,63 @@
           "type": "string"
         },
         "image": {
+          "type": "string"
+        }
+      }
+    },
+    "v1SignInRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "title": "signin"
+    },
+    "v1SignInResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1Tokens"
+        }
+      }
+    },
+    "v1SignUpRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "repeatedPassword": {
+          "type": "string"
+        }
+      },
+      "title": "signup"
+    },
+    "v1SignUpResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1Tokens"
+        }
+      }
+    },
+    "v1Tokens": {
+      "type": "object",
+      "properties": {
+        "access": {
+          "type": "string"
+        },
+        "refresh": {
           "type": "string"
         }
       }
