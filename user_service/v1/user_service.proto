@@ -28,7 +28,7 @@ service UserService {
             security: {} // Disable auth
         };
     }
-    // Log out
+    // Log out user
     rpc LogOut(LogOutRequest) returns (LogOutResponse) {
         option (google.api.http) = {
             get: "/api/v1/users/logout"
