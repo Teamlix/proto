@@ -50,7 +50,7 @@ service UserService {
             security: {} // Disable auth
         };
     }
-    // Get user's list
+    // Get user's list (ordering by date desc)
     rpc GetUsersList(GetUsersListRequest) returns (GetUsersListResponse) {
         option (google.api.http) = {
             get: "/api/v1/users"
@@ -126,7 +126,7 @@ message GetUserByIDResponse {
 }
 /** ** **/
 
-/* get user's list (ordering by date desc) */
+/* get user's list */
 message GetUsersListRequest {
     uint32 skip = 1;
     uint32 limit = 2;
