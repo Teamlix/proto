@@ -52,4 +52,4 @@ jobs:
         git add .
         git status
         git commit --allow-empty -m "generated code"
-        git push
+        git push origin $(git rev-parse --abbrev-ref HEAD)
