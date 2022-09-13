@@ -649,7 +649,7 @@ func (x *GetUserByIDResponse) GetResult() *User {
 	return nil
 }
 
-// get user's list (ordering by date desc)
+// get user's list
 type GetUsersListRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
