@@ -26,7 +26,7 @@ type UserServiceClient interface {
 	SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*SignUpResponse, error)
 	// Login with email and password
 	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error)
-	// Log out
+	// Log out user
 	LogOut(ctx context.Context, in *LogOutRequest, opts ...grpc.CallOption) (*LogOutResponse, error)
 	// Refresh pair of JWT tokens
 	Refresh(ctx context.Context, in *RefreshRequest, opts ...grpc.CallOption) (*RefreshResponse, error)
@@ -106,7 +106,7 @@ type UserServiceServer interface {
 	SignUp(context.Context, *SignUpRequest) (*SignUpResponse, error)
 	// Login with email and password
 	SignIn(context.Context, *SignInRequest) (*SignInResponse, error)
-	// Log out
+	// Log out user
 	LogOut(context.Context, *LogOutRequest) (*LogOutResponse, error)
 	// Refresh pair of JWT tokens
 	Refresh(context.Context, *RefreshRequest) (*RefreshResponse, error)

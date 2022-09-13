@@ -95,7 +95,7 @@
     },
     "/api/v1/users/logout": {
       "get": {
-        "summary": "Log out",
+        "summary": "Log out user",
         "operationId": "UserService_LogOut",
         "responses": {
           "200": {
