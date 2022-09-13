@@ -53,7 +53,117 @@
         "security": []
       }
     },
-    "/api/v1/signin": {
+    "/api/v1/users": {
+      "get": {
+        "summary": "Get user's list",
+        "operationId": "UserService_GetUsersList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetUsersListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "UserService"
+        ],
+        "security": []
+      }
+    },
+    "/api/v1/users/logout": {
+      "get": {
+        "summary": "Log out",
+        "operationId": "UserService_LogOut",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1LogOutResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "UserService"
+        ]
+      }
+    },
+    "/api/v1/users/refresh": {
+      "post": {
+        "summary": "Refresh pair of JWT tokens",
+        "operationId": "UserService_Refresh",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1RefreshResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1RefreshRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserService"
+        ]
+      }
+    },
+    "/api/v1/users/signin": {
       "post": {
         "summary": "Login with email and password",
         "operationId": "UserService_SignIn",
@@ -87,7 +197,7 @@
         "security": []
       }
     },
-    "/api/v1/signup": {
+    "/api/v1/users/signup": {
       "post": {
         "summary": "Register new user",
         "operationId": "UserService_SignUp",
@@ -120,9 +230,56 @@
         ],
         "security": []
       }
+    },
+    "/api/v1/users/{userId}": {
+      "get": {
+        "summary": "Get user object by user's id",
+        "operationId": "UserService_GetUserByID",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetUserByIDResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "UserService"
+        ],
+        "security": []
+      }
     }
   },
   "definitions": {
+    "GetUsersListResponseResult": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1User"
+          }
+        },
+        "totalCount": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
     "protobufAny": {
       "type": "object",
       "properties": {
@@ -175,6 +332,47 @@
         }
       }
     },
+    "v1GetUserByIDResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1User"
+        }
+      }
+    },
+    "v1GetUsersListResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/GetUsersListResponseResult"
+        }
+      }
+    },
+    "v1LogOutResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1RefreshRequest": {
+      "type": "object",
+      "properties": {
+        "refreshToken": {
+          "type": "string"
+        }
+      },
+      "title": "refresh tokens"
+    },
+    "v1RefreshResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/v1Tokens"
+        }
+      }
+    },
     "v1SignInRequest": {
       "type": "object",
       "properties": {
@@ -224,10 +422,21 @@
     "v1Tokens": {
       "type": "object",
       "properties": {
-        "access": {
+        "accessToken": {
           "type": "string"
         },
-        "refresh": {
+        "refreshToken": {
+          "type": "string"
+        }
+      }
+    },
+    "v1User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
           "type": "string"
         }
       }
