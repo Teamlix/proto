@@ -32,7 +32,7 @@ type UserServiceClient interface {
 	Refresh(ctx context.Context, in *RefreshRequest, opts ...grpc.CallOption) (*RefreshResponse, error)
 	// Get user object by user's id
 	GetUserByID(ctx context.Context, in *GetUserByIDRequest, opts ...grpc.CallOption) (*GetUserByIDResponse, error)
-	// Get user's list (ordering by date desc)
+	// Get user's list (ordering by date_created desc)
 	GetUsersList(ctx context.Context, in *GetUsersListRequest, opts ...grpc.CallOption) (*GetUsersListResponse, error)
 }
 
@@ -112,7 +112,7 @@ type UserServiceServer interface {
 	Refresh(context.Context, *RefreshRequest) (*RefreshResponse, error)
 	// Get user object by user's id
 	GetUserByID(context.Context, *GetUserByIDRequest) (*GetUserByIDResponse, error)
-	// Get user's list (ordering by date desc)
+	// Get user's list (ordering by date_created desc)
 	GetUsersList(context.Context, *GetUsersListRequest) (*GetUsersListResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }

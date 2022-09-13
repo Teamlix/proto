@@ -55,7 +55,7 @@
     },
     "/api/v1/users": {
       "get": {
-        "summary": "Get user's list (ordering by date desc)",
+        "summary": "Get user's list (ordering by date_created desc)",
         "operationId": "UserService_GetUsersList",
         "responses": {
           "200": {
