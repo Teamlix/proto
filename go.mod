@@ -1,4 +1,4 @@
-module github.com/teamlix/proto
+module github.com/Teamlix/proto
 
 go 1.19
 
