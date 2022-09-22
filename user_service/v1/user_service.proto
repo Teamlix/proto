@@ -98,6 +98,7 @@ message SignInResponse {
 /* logout */
 message LogOutRequest {
     string refresh_token = 1;
+    string access_token = 2;
 }
 
 message LogOutResponse {
