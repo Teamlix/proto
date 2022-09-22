@@ -117,6 +117,12 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
