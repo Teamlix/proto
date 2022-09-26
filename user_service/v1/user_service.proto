@@ -59,6 +59,8 @@ service UserService {
             security: {} // Disable auth
         };
     }
+    // Check JWT token.
+    rpc CheckAccessToken(CheckAccessTokenRequest) returns (CheckAccessTokenResponse) {}
 }
 
 message Tokens {
@@ -138,5 +140,15 @@ message GetUsersListResponse {
         uint32 total_count = 2;
     }
     Result result = 1;
+}
+/** ** **/
+
+/* check access token */
+message CheckAccessTokenRequest {
+    string access_token = 1;
+}
+
+message CheckAccessTokenResponse {
+    bool result = 1;
 }
 /** ** **/
