@@ -752,7 +752,7 @@ func (x *GetUsersListResponse) GetResult() *GetUsersListResponse_Result {
 	return nil
 }
 
-// check access token
+// check access token (jwt)
 type CheckAccessTokenRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
