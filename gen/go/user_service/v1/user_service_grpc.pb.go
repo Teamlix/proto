@@ -34,6 +34,8 @@ type UserServiceClient interface {
 	GetUserByID(ctx context.Context, in *GetUserByIDRequest, opts ...grpc.CallOption) (*GetUserByIDResponse, error)
 	// Get user's list (ordering by date_created desc)
 	GetUsersList(ctx context.Context, in *GetUsersListRequest, opts ...grpc.CallOption) (*GetUsersListResponse, error)
+	// Check JWT token.
+	CheckAccessToken(ctx context.Context, in *CheckAccessTokenRequest, opts ...grpc.CallOption) (*CheckAccessTokenResponse, error)
 }
 
 type userServiceClient struct {
@@ -98,6 +100,15 @@ func (c *userServiceClient) GetUsersList(ctx context.Context, in *GetUsersListRe
 	return out, nil
 }
 
+func (c *userServiceClient) CheckAccessToken(ctx context.Context, in *CheckAccessTokenRequest, opts ...grpc.CallOption) (*CheckAccessTokenResponse, error) {
+	out := new(CheckAccessTokenResponse)
+	err := c.cc.Invoke(ctx, "/user_service.v1.UserService/CheckAccessToken", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
@@ -114,6 +125,8 @@ type UserServiceServer interface {
 	GetUserByID(context.Context, *GetUserByIDRequest) (*GetUserByIDResponse, error)
 	// Get user's list (ordering by date_created desc)
 	GetUsersList(context.Context, *GetUsersListRequest) (*GetUsersListResponse, error)
+	// Check JWT token.
+	CheckAccessToken(context.Context, *CheckAccessTokenRequest) (*CheckAccessTokenResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -138,6 +151,9 @@ func (UnimplementedUserServiceServer) GetUserByID(context.Context, *GetUserByIDR
 }
 func (UnimplementedUserServiceServer) GetUsersList(context.Context, *GetUsersListRequest) (*GetUsersListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUsersList not implemented")
+}
+func (UnimplementedUserServiceServer) CheckAccessToken(context.Context, *CheckAccessTokenRequest) (*CheckAccessTokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckAccessToken not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -260,6 +276,24 @@ func _UserService_GetUsersList_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_CheckAccessToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckAccessTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).CheckAccessToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/user_service.v1.UserService/CheckAccessToken",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).CheckAccessToken(ctx, req.(*CheckAccessTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -290,6 +324,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUsersList",
 			Handler:    _UserService_GetUsersList_Handler,
+		},
+		{
+			MethodName: "CheckAccessToken",
+			Handler:    _UserService_CheckAccessToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
